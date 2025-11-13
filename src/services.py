@@ -25,6 +25,10 @@ class CrossrefService:
         main_author = ""
         other_authors = []
         for author in authors:  # type: ignore
+            # skip non fisical peson authors
+            if author.get("name"):
+                continue
+
             author_name = f'{author.get("given")} ' if author.get("given") else ""
             author_name += f'{author.get("family")} ' if author.get("family") else ""
             author_name = author_name.strip()
@@ -75,6 +79,8 @@ class CrossrefService:
         if link:
             url = link[0].get("URL")
         else:
+            url = data.get("URL")
+        if not url:
             msg = f"Failed to get work url from 'link' key: {link}."
             raise cls.Exceptions.CrossrefException(msg)
 
@@ -139,6 +145,10 @@ class CrossrefService:
         main_author = ""
         other_authors = []
         for author in authors:  # type: ignore
+            # skip non fisical peson authors
+            if author.get("name"):
+                continue
+
             author_name = f'{author.get("given")} ' if author.get("given") else ""
             author_name += f'{author.get("family")} ' if author.get("family") else ""
             author_name = author_name.strip()
@@ -189,6 +199,8 @@ class CrossrefService:
         if link:
             url = link[0].get("URL")
         else:
+            url = data.get("URL")
+        if not url:
             msg = f"Failed to get work url from 'link' key: {link}."
             raise cls.Exceptions.CrossrefException(msg)
 
