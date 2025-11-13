@@ -278,7 +278,7 @@ class CrossrefService:
 
                 work_res = await work_res.json()
 
-                open("dbg/output.json", "w", encoding="utf8").write(json.dumps(work_res, indent=2))
+                # open("dbg/output.json", "w", encoding="utf8").write(json.dumps(work_res, indent=2))
 
         work_type = work_res.get("message").get("type")
         match work_type:
@@ -364,6 +364,6 @@ class OpenlibraryService:
 
                 book_res = await book_res.json()
 
-            open("dbg/output.json", "w", encoding="utf8").write(json.dumps(book_res, indent=2))
+            # open("dbg/output.json", "w", encoding="utf8").write(json.dumps(book_res, indent=2))
 
             return cls._format_monograph(book_res, isbn)
