@@ -36,6 +36,9 @@ def format_monograph(data: Monograph):
     # format reference
     reference = f"{author_str}. {title_str}. {edition_str}{location_str}. <i>E-book</i>."
 
+    # remove double dots from abbreviated names
+    reference = reference.replace("..", ".")
+
     # add isbn
     isbn_str = f" ISBN: {isbnlib.mask(data.isbn)}." if data.isbn else ""
     reference += isbn_str
@@ -65,7 +68,10 @@ def format_proceedings_artice(data: ProceedingsArticle):
     date_str = f", {data.published_at.day} {month_map[data.published_at.month]} {data.published_at.year}" if isinstance(data.published_at, date) else f"{data.published_at}"
 
     # format reference data
-    reference = f"{author_str}. {title_str}. {journal_title_str}, {data.location}{volume_str}{issue_str}, p. {data.pages}, {date_str}."
+    reference = f"{author_str}. {title_str}. {journal_title_str}, {data.location}{volume_str}{issue_str}, p. {data.pages}{date_str}."
+
+    # remove double dots from abbreviated names
+    reference = reference.replace("..", ".")
 
     # add doi
     doi_str = f" DOI: {data.doi}." if data.doi else ""
@@ -100,6 +106,9 @@ def format_journal_artice(data: JournalArticle):
     reference = f"{author_str}. {title_str}. {journal_title_str}, {data.location}{volume_str}{issue_str}"
     reference_ending_str = f"{date_str}. {section_str}." if section_str else f", p. {data.pages}{date_str}."
     reference += reference_ending_str
+
+    # remove double dots from abbreviated names
+    reference = reference.replace("..", ".")
 
     # add doi
     doi_str = f" DOI: {data.doi}." if data.doi else ""

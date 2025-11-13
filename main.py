@@ -4,35 +4,29 @@ import asyncio
 async def main():
     import sys
     import json
-    from pprint import pprint
-    from src.services import CrossrefService
-    from src.reference_maker import format_journal_artice, format_proceedings_artice
-    from src.schemas import JournalArticle, ProceedingsArticle
+    from src.services import CrossrefService, OpenlibraryService
+    from src.reference_maker import format_journal_artice, format_proceedings_artice, format_monograph
+    from src.schemas import JournalArticle, ProceedingsArticle, Monograph
 
-    res = await CrossrefService.get_from_doi(sys.argv[1])
-    if isinstance(res, dict):
-        open("dbg/output.json", "w", encoding="utf8").write(json.dumps(res, indent=2))
+    match sys.argv[1]:
+        case "doi":
+            res = await CrossrefService.get_from_doi(sys.argv[2])
+            if isinstance(res, dict):
+                open("dbg/output.json", "w", encoding="utf8").write(json.dumps(res, indent=2))
 
-    elif isinstance(res, JournalArticle):
-        print(format_journal_artice(res))
+            elif isinstance(res, JournalArticle):
+                print(format_journal_artice(res))
 
-    elif isinstance(res, ProceedingsArticle):
-        print(format_proceedings_artice(res))
+            elif isinstance(res, ProceedingsArticle):
+                print(format_proceedings_artice(res))
 
-
-async def main2():
-    import sys
-    import json
-    from src.services import OpenlibraryService
-    from src.schemas import Monograph
-    from src.reference_maker import format_monograph
-
-    res = await OpenlibraryService.get_from_isbn(sys.argv[1])
-    if isinstance(res, dict):
-        open("dbg/output.json", "w", encoding="utf8").write(json.dumps(res, indent=2))
-    if isinstance(res, Monograph):
-        print(format_monograph(res))
+        case "isbn":
+            res = await OpenlibraryService.get_from_isbn(sys.argv[2])
+            if isinstance(res, dict):
+                open("dbg/output.json", "w", encoding="utf8").write(json.dumps(res, indent=2))
+            if isinstance(res, Monograph):
+                print(format_monograph(res))
 
 
 if __name__ == "__main__":
-    asyncio.run(main2())
+    asyncio.run(main())

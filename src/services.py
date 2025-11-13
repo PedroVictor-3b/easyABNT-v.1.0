@@ -112,7 +112,10 @@ class CrossrefService:
 
         # get publish date
         try:
-            published_date_parts = data.get("published").get("date-parts")[0]  # type: ignore
+            try:
+                published_date_parts = data.get("published").get("date-parts")[0]  # type: ignore
+            except AttributeError:
+                published_date_parts = data.get("created").get("date-parts")[0]  # type: ignore
         except Exception as e:
             msg = f"Failed to extract date parts from 'published' key: {e.__class__.__name__}: {e}."
             raise cls.Exceptions.CrossrefException(msg)
@@ -232,7 +235,10 @@ class CrossrefService:
 
         # get publish date
         try:
-            published_date_parts = data.get("published").get("date-parts")[0]  # type: ignore
+            try:
+                published_date_parts = data.get("published").get("date-parts")[0]  # type: ignore
+            except AttributeError:
+                published_date_parts = data.get("created").get("date-parts")[0]  # type: ignore
         except Exception as e:
             msg = f"Failed to extract date parts from 'published' key: {e.__class__.__name__}: {e}."
             raise cls.Exceptions.CrossrefException(msg)
