@@ -15,8 +15,8 @@ class JournalArticle(BaseModel):
     journal_title: str
     journal_subtitle: Optional[str] = None
 
-    doi: str
-    url: str
+    doi: Optional[str] = None
+    url: Optional[str] = None
 
     location: Optional[str] = "[S.l.]"
     volume: Optional[int] = None

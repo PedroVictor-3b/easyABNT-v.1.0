@@ -1,3 +1,5 @@
+from datetime import date
+
 from .schemas import JournalArticle
 
 month_map = {
@@ -16,13 +18,16 @@ month_map = {
 }
 
 
+# ABNT NBR 6023:2025 - 7.7.7; 7.7.8
 def format_journal_artice(data: JournalArticle):
+    # format author names
     author_names = data.main_author.split(" ")
     author_str = f"{author_names.pop().upper()}, {' '.join(author_names)}"
     for author in data.other_authors:  # type: ignore
         author_names = author.split(" ")
         author_str += f"; {author_names.pop().upper()}, {' '.join(author_names)}"
 
+    # basic required reference data
     title_str = f"{data.title}: {data.subtitle}" if data.subtitle else data.title
     journal_title_str = f"<strong>{data.journal_title}<strong>: {data.journal_subtitle}" if data.journal_subtitle else f"<strong>{data.journal_title}<strong>"
     volume_str = f"v. {data.volume}" if data.volume else ""
@@ -30,9 +35,18 @@ def format_journal_artice(data: JournalArticle):
     section_str = f"{data.section}, p. {data.pages}" if data.section else ""
     date_str = f"{data.published_at.day} {month_map[data.published_at.month]} {data.published_at.year}"
 
-    reference_ending_str = f", {date_str}. {section_str}." if section_str else f", p. {data.pages}, {date_str}."
-
+    # variable required reference data
     reference = f"{author_str}. {title_str}. {journal_title_str}, {data.location}, {volume_str}, {issue_str}"
+    reference_ending_str = f", {date_str}. {section_str}." if section_str else f", p. {data.pages}, {date_str}."
     reference += reference_ending_str
+
+    # add doi
+    doi_str = f" DOI: {data.doi}." if data.doi else ""
+    reference += doi_str
+
+    # add online access required data
+    today = date.today()
+    online_access_str = f" Disponível em: {data.url}. Acesso em: {today.day} {month_map[today.month]} {today.year}." if data.url else ""
+    reference += online_access_str
 
     return reference

@@ -59,7 +59,7 @@ class CrossrefService:
             journal_title, journal_subtitle = container.split(":", 1)
             journal_title.strip().strip(".")
             journal_subtitle = journal_subtitle.strip().strip(".")
-        except IndexError:
+        except ValueError:
             journal_title = container
             journal_subtitle = None
 
