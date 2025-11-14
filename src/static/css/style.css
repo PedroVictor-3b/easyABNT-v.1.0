@@ -143,6 +143,7 @@ div.centered-container {
 
 #reference-text {
   min-height: 5rem;
+  word-wrap: break-word;
   padding: 20px 10px; /* Reduced padding */
   font-size: 14px;
 }
