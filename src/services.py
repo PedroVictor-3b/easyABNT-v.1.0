@@ -108,9 +108,9 @@ class CrossrefService:
 
         # get pages
         pages = data.get("page")  # type: ignore
-        if not pages:
-            msg = f"Failed get page number from 'page' key: {pages}."
-            raise cls.Exceptions.CrossrefException(msg)
+        # if not pages:
+        #     msg = f"Failed get page number from 'page' key: {pages}."
+        #     raise cls.Exceptions.CrossrefException(msg)
 
         # get publish date
         try:
@@ -232,9 +232,9 @@ class CrossrefService:
 
         # get pages
         pages = data.get("page")  # type: ignore
-        if not pages:
-            msg = f"Failed get page number from 'page' key: {pages}."
-            raise cls.Exceptions.CrossrefException(msg)
+        # if not pages:
+        #     msg = f"Failed get page number from 'page' key: {pages}."
+        #     raise cls.Exceptions.CrossrefException(msg)
 
         # get publish date
         try:
@@ -309,7 +309,7 @@ class OpenlibraryService:
         # get authors
         main_author = ""
         other_authors = []
-        if data.get("authors"):
+        if data.get("authors") and data.get("authors")[0].get("name") != "[author not identified]":  # type: ignore
             for i, author in enumerate(data.get("authors")):  # type: ignore
                 name = author.get("name")
                 if i == 0:

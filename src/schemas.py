@@ -22,7 +22,7 @@ class JournalArticle(BaseModel):
     volume: Optional[int] = None
     issue: Optional[int] = None
     section: Optional[str] = None
-    pages: str
+    pages: Optional[str] = None
 
     published_at: date | int
 
@@ -44,7 +44,7 @@ class ProceedingsArticle(BaseModel):
     volume: Optional[int] = None
     issue: Optional[int] = None
     section: Optional[str] = None
-    pages: str
+    pages: Optional[str] = None
 
     published_at: date | int
 

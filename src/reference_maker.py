@@ -66,9 +66,10 @@ def format_proceedings_artice(data: ProceedingsArticle):
     volume_str = f", v. {data.volume}" if data.volume else ""
     issue_str = f", n. {data.issue}" if data.issue else ""
     date_str = f", {data.published_at.year}" if isinstance(data.published_at, date) else f", {data.published_at}"
+    page_str = f", p. {data.pages}" if data.pages else ""
 
     # format reference data
-    reference = f"{author_str}. {title_str}. {journal_title_str}, {data.location}{volume_str}{issue_str}, p. {data.pages}{date_str}."
+    reference = f"{author_str}. {title_str}. {journal_title_str}, {data.location}{volume_str}{issue_str}{page_str}{date_str}."
 
     # remove double dots from abbreviated names
     reference = reference.replace("..", ".")
@@ -101,10 +102,11 @@ def format_journal_artice(data: JournalArticle):
     issue_str = f", n. {data.issue}" if data.issue else ""
     section_str = f", {data.section}, p. {data.pages}" if data.section else ""
     date_str = f", {data.published_at.year}" if isinstance(data.published_at, date) else f", {data.published_at}"
+    page_str = f", p. {data.pages}" if data.pages else ""
 
     # variable required reference data
     reference = f"{author_str}. {title_str}. {journal_title_str}, {data.location}{volume_str}{issue_str}"
-    reference_ending_str = f"{date_str}. {section_str}." if section_str else f", p. {data.pages}{date_str}."
+    reference_ending_str = f"{date_str}. {section_str}." if section_str else f"{page_str}{date_str}."
     reference += reference_ending_str
 
     # remove double dots from abbreviated names
